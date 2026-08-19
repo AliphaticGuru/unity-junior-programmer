@@ -28,6 +28,6 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 moveInput = controls.Player.Move.ReadValue<Vector2>();
         float forwardInput = moveInput.y;
-        playerRb.AddForce(focalPoint.transform.forward * forwardInput * playerSpeed * Time.deltaTime);
+        playerRb.AddForce(focalPoint.transform.forward * forwardInput * playerSpeed);
     }
 }
