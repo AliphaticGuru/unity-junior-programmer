@@ -9,7 +9,7 @@ public class PlayerControllerX : MonoBehaviour
     private float speed = 500;
     private float turboSpeed = 1500;
     private GameObject focalPoint;
-    private ParticleSystem turboDust;
+    public ParticleSystem turboDust;
     public bool turboMode;
 
     public bool hasPowerup;
@@ -35,7 +35,7 @@ public class PlayerControllerX : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody>();
         focalPoint = GameObject.Find("Focal Point");
-        turboDust = GetComponent<ParticleSystem>();
+        // turboDust = GetComponent<ParticleSystem>();
     }
 
     void Update()
@@ -49,7 +49,7 @@ public class PlayerControllerX : MonoBehaviour
         if (turboMode)
         {
             playerRb.AddForce(focalPoint.transform.forward * verticalInput * turboSpeed * Time.deltaTime);
-            // turboDust.Play;
+            turboDust.Play();
         }
         
         // Set powerup indicator position to beneath player
@@ -93,8 +93,6 @@ public class PlayerControllerX : MonoBehaviour
             {
                 enemyRigidbody.AddForce(awayFromPlayer * normalStrength, ForceMode.Impulse);
             }
-
-
         }
     }
 
