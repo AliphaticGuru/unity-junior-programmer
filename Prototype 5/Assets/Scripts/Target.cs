@@ -41,7 +41,7 @@ public class Target : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Mouse.current.leftButton.wasPressedThisFrame && gameManager.isGameActive)
         {
             Debug.Log("Mouse was clicked");
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -56,11 +56,18 @@ public class Target : MonoBehaviour
                     gameManager.UpdateScore(pointValue);
                 }
             }
-        }
+        } 
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("DestroyZone")) Destroy(gameObject);
+        if (other.CompareTag("DestroyZone")) 
+        {
+            Destroy(gameObject);
+            if (!gameObject.CompareTag("Bad"))
+            {
+                gameManager.GameOver();
+            }
+        }  
     }
 }
