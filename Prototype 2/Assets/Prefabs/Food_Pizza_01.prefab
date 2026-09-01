@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4935686165913949963}
   - component: {fileID: 403588927838475246}
   - component: {fileID: 3407452539778222323}
-  - component: {fileID: 7032559044554352580}
   - component: {fileID: -4246297240065584554}
   - component: {fileID: -9061813941698242933}
   m_Layer: 0
@@ -117,21 +116,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6175621260568753646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 440350a1b58d0444ba06e12b02efa836, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c52ee72091692143869a36cdefe1fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestroyOutOfBounds
---- !u!114 &7032559044554352580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6175621260568753646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13a20a81922801f469198fe1c85bdbbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DetectCollisions
 --- !u!54 &-4246297240065584554
 Rigidbody:
   m_ObjectHideFlags: 0

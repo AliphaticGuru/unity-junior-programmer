@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     // movement tuning (editable in inspector)
-    public float turnSpeed = 100f;
-    public float speed = 5.0f;
+    [SerializeField] private const float turnSpeed = 100f;
+    [SerializeField] private float speed = 5.0f;
 
     // Input System action exposed in Inspector for binding (WASD/Arrow key)
     public InputAction moveAction;
@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // Read the 2D vector from the MoveAction (x : horizontal, y : vertical) and store it in moveInput
         moveInput = moveAction.ReadValue<Vector2>();

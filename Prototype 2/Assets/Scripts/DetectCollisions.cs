@@ -1,22 +1,17 @@
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DetectCollisions : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    // Detect collision with other objects
     void OnTriggerEnter(Collider other)
     {
+        // Instead of destroying the projectile when it collides with an animal
+        //Destroy(other.gameObject); 
+
+        // Just deactivate the food and destroy the animal
+        other.gameObject.SetActive(false);
         Destroy(gameObject);
-        Destroy(other.gameObject);
     }
+
 }
