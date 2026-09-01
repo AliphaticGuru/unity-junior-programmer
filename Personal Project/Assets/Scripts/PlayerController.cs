@@ -1,90 +1,91 @@
-using NUnit.Framework;
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private float speed = 6f;
-    private float HorizontalBoundary = 23.0f;
-    private float bottomBound = 0.5f;
+    [Header("Lane Movement")]
+    [SerializeField] private float speed = 6f;
+    [SerializeField] private float HorizontalBoundary = 22.5f;
+    [SerializeField] private float bottomBound = 0f;
+    [SerializeField] private float facing = 1f;
+    public float Facing => facing;
+    // [SerializeField] private GameObject focalPoint;
     private Rigidbody playerRb;
-    public float jumpForce;
-    public bool isOnGround;
 
-    public InputAction moveAction;
+    [Header("Jump")]
+    [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private bool isOnGround;
+    [SerializeField] private float gravityModifier;    
+    [SerializeField] public InputAction moveAction;
+    [SerializeField] public InputAction jumpAction;
     
     public Vector2 moveInput;
-    
-    // public InputAction verticalInput;
-    // public InputAction horizontalInput;
-    public float gravityModifier;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         Physics.gravity *= gravityModifier;
+        // focalPoint = GameObject.Find("Focal Point");
         moveAction.Enable();
-        // InvokeRepeating("MovePlayer", 0, 0.01f);
+        jumpAction.Enable();
     }
-
     // Update is called once per frame
     void Update()
     {
         MovePlayer();
     }
-
     // Player controller using the x and y-components vector
     private void MovePlayer()
     {
         // Read the users horizontal and vertical keypress and assigned to moveInput variable
-        moveInput = moveAction.ReadValue<Vector2>();
+        moveInput = moveAction.ReadValue<Vector2>();                
         Vector3 playerPos = transform.position;
+        if (moveInput.x != 0f)
+        {
+            facing = moveInput.x > 0f ? 1f : -1f;
+        }
 
         // if player is on a ground/floor, jump upwards
-        if (moveInput.y > 0 && isOnGround)
+        if (jumpAction.triggered && isOnGround)
         {
             // float vertical = verticalInput.ReadValue<float>();
-            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            playerRb.AddForce(Vector3.up *  jumpForce, ForceMode.Impulse);
             isOnGround = false;
         } 
 
         // if player is on ground/floor that is not the base floor, move downwards
-        else if (moveInput.y < 0 && isOnGround)
+        if (moveInput.y < 0 && isOnGround)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y - 1.5f, transform.position.z);
+            playerPos = new Vector3(playerPos.x, playerPos.y - 1.5f, playerPos.z);
             isOnGround = false;
+        }
 
-            // if player verical position is less than the base floor level, reset it back to the base floor level
-            if (transform.position.y < bottomBound)
-            {
-                transform.position = new Vector3(transform.position.x, bottomBound, transform.position.z);
-                playerRb.AddForce(Vector3.up * 0.3f, ForceMode.Impulse);
-                isOnGround = true;
-            }
+        // if player verical position is less than the base floor level, reset it back to the base floor level
+        if (playerPos.y < bottomBound)
+        {
+            playerPos = new Vector3(playerPos.x, bottomBound, playerPos.z);
+            // playerRb.AddForce(Vector3.up * 0.3f, ForceMode.Impulse);
+            isOnGround = true;
         }
 
         // controls players horizontal movement while staying in the designated boundary
-        if (moveInput.x > 0)
-        {
-            // transform.Translate(Vector3.right * speed * Time.deltaTime);
-            playerRb.AddForce(Vector3.right * speed * Time.deltaTime, ForceMode.Impulse);
-        }
+        transform.Translate(transform.right * moveInput.x * speed * Time.deltaTime);
 
-        if (moveInput.x < 0)
+        // Only update rotation if the player is actively pressing a direction
+        if (moveInput.x != 0)
         {
-            // transform.Translate(Vector3.left * speed );
-            playerRb.AddForce(Vector3.left * speed * Time.deltaTime, ForceMode.Impulse);
+            float yRotation = moveInput.x > 0f ? 0f : -180f; // 180f or -180f both work perfectly
+            transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
         }
         
         if (playerPos.x >= HorizontalBoundary)
         {
-            transform.position = new Vector3(HorizontalBoundary, transform.position.y, transform.position.z);
+            transform.position = new Vector3(HorizontalBoundary -1, transform.position.y, transform.position.z);
         }
-
-        if (playerPos.x < -HorizontalBoundary)
+        else if (playerPos.x <= -HorizontalBoundary)
         {
-            transform.position = new Vector3(-HorizontalBoundary, transform.position.y, transform.position.z);
+            transform.position = new Vector3(-HorizontalBoundary +1, transform.position.y, transform.position.z);
         }
     }
 
@@ -95,11 +96,9 @@ public class PlayerController : MonoBehaviour
         {
             isOnGround = true;
         }
-
         if (collision.gameObject.CompareTag("Floor0"))
         {
-            isOnGround = true;
-            
+            isOnGround = true;    
         }
     }
 }

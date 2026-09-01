@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3297387651974536547}
-  - component: {fileID: 7701226459828934358}
   - component: {fileID: 2913695047579422430}
   - component: {fileID: 4522926458977984334}
   - component: {fileID: 8075934648962675876}
@@ -35,23 +34,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7701226459828934358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8435165781329279043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6cb29f310ad843428f1363d79bc213f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DestructibleObstacle
-  health: 1
-  debrisVfxPrefab: {fileID: 0}
-  breakSfx: {fileID: 0}
-  possibleDropPrefabs: []
-  dropChance: 0.35
 --- !u!33 &2913695047579422430
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -124,7 +106,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
