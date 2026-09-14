@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.InputSystem; // MIGRATED: New Input System namespace
+using UnityEngine.InputSystem;
+using TMPro; // MIGRATED: New Input System namespace
 
 public class MainManager : MonoBehaviour
 {
+    // public static MainManager Instance {get; private set;}
+    
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
 
-    public Text ScoreText;
+    public TextMeshProUGUI ScoreText;
     public GameObject GameOverText;
+    public GameObject backToMenu;
 
     private bool m_Started = false;
     private int m_Points;
@@ -25,6 +29,15 @@ public class MainManager : MonoBehaviour
     // MIGRATED: bind the Space key as a button action
     void Awake()
     {
+        // if (Instance != null)
+        // {
+        //     Destroy(gameObject);
+        //     return;
+        // }
+
+        // Instance = this;
+        // DontDestroyOnLoad(gameObject);
+
         m_LaunchAction = new InputAction("Launch", InputActionType.Button, "<Keyboard>/space");
     }
 
@@ -57,6 +70,8 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+
+        backToMenu.SetActive(false);
     }
 
     private void Update()
@@ -86,12 +101,25 @@ public class MainManager : MonoBehaviour
     void AddPoint(int point)
     {
         m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        UpdateScoreDisplay();
+        // ScoreText.text = $"Score : {m_Points}";
+    }
+
+    private void UpdateScoreDisplay()
+    {
+        string playerName = PlayerData.Instance != null ? PlayerData.Instance.playerName : "Player";
+        ScoreText.text = $"Score : {m_Points} - Player: {playerName}";
+    }
+
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void GameOver()
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+        backToMenu.SetActive(true);
     }
 }
