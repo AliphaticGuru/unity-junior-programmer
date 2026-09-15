@@ -76,13 +76,31 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void ResetActiveUserOnly()
+    {
+        if (nameInputField == null || PlayerData.Instance == null) return;
+        string typedName = nameInputField.text.Trim();
+
+        if (!string.IsNullOrWhiteSpace(typedName))
+        {
+            // wipe only this specific profile name
+            PlayerData.Instance.ResetSingleUserData(typedName);
+
+            // Instantly refresh the UI text display to show the reset status
+            OnNameInputChanged(typedName);
+        }
+    }
+
     public void ResetHighScore()
     {
-        PlayerPrefs.DeleteKey("BestScore");
-        PlayerPrefs.DeleteKey("HighScoreName");
-        PlayerPrefs.Save();
-
-        DisplayGlobalRecord();
+        if (PlayerData.Instance != null)
+        {
+            PlayerData.Instance.ResetAllData();
+            
+            DisplayGlobalRecord();
+            OnNameInputChanged(nameInputField != null ? nameInputField.text : "");
+        }
+        
     }
     
     public void Exit()

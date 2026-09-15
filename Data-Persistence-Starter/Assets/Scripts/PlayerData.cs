@@ -70,6 +70,45 @@ public class PlayerData : MonoBehaviour
         SaveGameData();
     }
 
+    public void ResetSingleUserData(string targetName)
+    {
+        string cleanName = targetName.Trim();
+
+        // Remove the user from the history dictionary if existing
+        if (userRecords.ContainsKey(cleanName))
+        {
+            userRecords.Remove(cleanName);
+        }
+
+        // Clear out active session values if it is the current player
+        if (playerName.Trim() == cleanName)
+        {
+            userScore = 0;
+        }
+
+        // Save the modified profile list back to the JSON file
+        SaveGameData();
+        Debug.Log($"Profile data for '{cleanName}' has been wiped.");
+    }
+
+    public void ResetAllData()
+    {
+        playerName = "";
+        userScore = 0;
+
+        globalHighScore = 0;
+        globalHighScoreName = "Nobody";
+
+        userRecords.Clear();
+
+        if (File.Exists(saveFilePath))
+        {
+            File.Delete(saveFilePath);
+        }
+
+        Debug.Log("All game data and profiles have been completely wiped.");
+    }
+
     #region JSON Serialization (Persistence Between Sessions)
     [System.Serializable]
     private class SaveDataWrapper
