@@ -14,9 +14,11 @@ public class MainManager : MonoBehaviour
     public int LineCount = 6;
     public Rigidbody Ball;
 
-    public TextMeshProUGUI ScoreText;
-    public GameObject GameOverText;
-    public GameObject backToMenu;
+    [SerializeField] private TextMeshProUGUI ScoreAndNameText;
+    [SerializeField] private TextMeshProUGUI globalHighScoreText;
+    [SerializeField] private TextMeshProUGUI personalHighScoreText;
+    [SerializeField] private GameObject GameOverText;
+    [SerializeField] private GameObject backToMenu;
 
     private bool m_Started = false;
     private int m_Points;
@@ -29,15 +31,6 @@ public class MainManager : MonoBehaviour
     // MIGRATED: bind the Space key as a button action
     void Awake()
     {
-        // if (Instance != null)
-        // {
-        //     Destroy(gameObject);
-        //     return;
-        // }
-
-        // Instance = this;
-        // DontDestroyOnLoad(gameObject);
-
         m_LaunchAction = new InputAction("Launch", InputActionType.Button, "<Keyboard>/space");
     }
 
@@ -70,8 +63,9 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
-
         backToMenu.SetActive(false);
+
+        UpdateUIDisplays();
     }
 
     private void Update()
@@ -101,14 +95,32 @@ public class MainManager : MonoBehaviour
     void AddPoint(int point)
     {
         m_Points += point;
-        UpdateScoreDisplay();
+
+        if (PlayerData.Instance != null)
+        {
+            PlayerData.Instance.UpdateScores(m_Points);
+        }
+        UpdateUIDisplays();
         // ScoreText.text = $"Score : {m_Points}";
     }
 
-    private void UpdateScoreDisplay()
+    private void UpdateUIDisplays()
     {
-        string playerName = PlayerData.Instance != null ? PlayerData.Instance.playerName : "Player";
-        ScoreText.text = $"Score : {m_Points} - Player: {playerName}";
+        // string playerName = PlayerData.Instance != null ? PlayerData.Instance.playerName : "Player";
+
+        ScoreAndNameText.text = $"{PlayerData.Instance.playerName} | Score : {m_Points}";
+        
+        int personalBest = PlayerData.Instance.GetPersonalBest(PlayerData.Instance.playerName);
+        if (personalHighScoreText != null)
+        {
+            personalHighScoreText.text = $"Your Best: {personalBest}";
+        }
+
+                // Community master record score lookup
+        if (globalHighScoreText != null)
+        {            
+            globalHighScoreText.text = $"All-Time Best: {PlayerData.Instance.globalHighScoreName} ({PlayerData.Instance.globalHighScore})";
+        }
     }
 
     public void GoToMenu()
