@@ -5,9 +5,19 @@ public class RusherEnemy : Enemy
     [Header("Rusher Settings")]
     [SerializeField] private float meleeRange = 1.5f;
 
+    [SerializeField] private float attackCooldown = 1f;
+    private float nextAttackTime;
+
     protected override void PerformBehaviour()
     {
-        MoveTowardsPlayer();
+        if (IsPlayerInMeleeRange())
+        {
+            AttackPlayer();
+        }
+        else
+        {
+            MoveTowardsPlayer();
+        }
     }
 
     private void MoveTowardsPlayer()
@@ -25,6 +35,18 @@ public class RusherEnemy : Enemy
                 Space.World
             );
         }
+    }
+
+    private void AttackPlayer()
+    {
+        if (Time.time < nextAttackTime)
+        {
+            return;
+        }
+
+        nextAttackTime = Time.time + attackCooldown;
+
+        playerDamageable?.TakeDamage(1);
     }
 
     private bool IsPlayerInMeleeRange()

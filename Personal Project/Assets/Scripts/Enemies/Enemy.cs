@@ -10,6 +10,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     protected Transform player;
     protected SurvivalManager survivalManager;
 
+    protected IDamageable playerDamageable;
+
     private int currentHealth;
 
     public int CurrentHealth => currentHealth;
@@ -72,6 +74,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         if (playerObject != null)
         {
             player = playerObject.transform;
+            playerDamageable = playerObject.GetComponent<IDamageable>();
         }
     }
 
