@@ -40,9 +40,11 @@ public class MoveToKill : MonoBehaviour
     // Detect collision with other objects
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        IDamageable damageable = other.GetComponent<IDamageable>();
+        
+        if (damageable != null)
         {
-            Destroy(other.gameObject);
+            damageable.TakeDamage(1); // Assuming the projectile deals 1 damage
             Destroy(gameObject);
         }
     }

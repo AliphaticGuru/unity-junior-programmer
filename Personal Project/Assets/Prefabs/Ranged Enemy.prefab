@@ -50,6 +50,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde47589a256b1f43a5dddf350d51261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RangedEnemy
+  speed: 1.5
+  maxHealth: 3
+  attackRange: 5
 --- !u!33 &7809898825832774471
 MeshFilter:
   m_ObjectHideFlags: 0
