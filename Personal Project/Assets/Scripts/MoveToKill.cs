@@ -15,13 +15,9 @@ public class MoveToKill : MonoBehaviour
         if (playerController != null)
         {
             projectileDirection = playerController.Facing; // 180f or -180f both work perfectly
-            // Vector3 newScale = transform.localScale;
-            // newScale.x = Mathf.Abs(newScale.x) * projectileDirection;
-            // transform.localScale = newScale;
 
             float zRotation = projectileDirection > 0f ? -90f : 90f;
             transform.rotation = Quaternion.Euler(0f, 0f, zRotation);
-            // transform.rotation = Quaternion.Euler(0f, 0f, projectileRotation);
         }
     }
 

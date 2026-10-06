@@ -13,11 +13,16 @@ public class SurvivalManager : MonoBehaviour
     [SerializeField] private float spawnRangeX = 24.0f;
     [SerializeField] private float spawnYMin = 0.5f;
     [SerializeField] private float spawnYMax = 10f;
+    [SerializeField] public float enemySpeedCap = 3f;
 
     [Header("Wave Data")]
     [SerializeField] private int enemyCount;
     [SerializeField] private int waveCount;
     [SerializeField] public float enemySpeed;
+
+    [Header("Wave Limits")]
+    [SerializeField] private int maxEnemiesPerWave = 15; // The hard cap for enemies
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,9 +35,14 @@ public class SurvivalManager : MonoBehaviour
         enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
         if (enemyCount == 0)
         {
-            SpawnEnemyWave(waveCount);
+            int enemiesToSpawn = Mathf.Min(waveCount, maxEnemiesPerWave); // Ensure enemies number does not exceed the cap
+            SpawnEnemyWave(enemiesToSpawn);
             waveCount++;
-            enemySpeed += 0.1f;
+
+            if (enemySpeed < enemySpeedCap)
+            {
+                enemySpeed += 0.2f;
+            }
         }
 
         Vector3 powerupSpawnOffset = new Vector3(-2f, 0.5f, 0f);

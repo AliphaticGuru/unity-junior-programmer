@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3080246445904248650}
-  - component: {fileID: -1360269745461589726}
+  - component: {fileID: 2819300792614363486}
   - component: {fileID: 3187405368117737705}
   - component: {fileID: 6327684276267606854}
   - component: {fileID: 1300254539203256261}
@@ -38,7 +38,7 @@ Transform:
   - {fileID: 1389602359614599756}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-1360269745461589726
+--- !u!114 &2819300792614363486
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,10 +47,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7581570601656294506}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e9df418f9abddc4ba64fcc50dfa11e0, type: 3}
+  m_Script: {fileID: 11500000, guid: f90fa33618a0de24a9222a4542e258de, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  survivalManager: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::RusherEnemy
+  speed: 2
+  maxHealth: 3
+  meleeRange: 1.5
 --- !u!33 &3187405368117737705
 MeshFilter:
   m_ObjectHideFlags: 0

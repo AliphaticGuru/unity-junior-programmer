@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Lane Movement")]
     [SerializeField] private float speed = 6f;
-    [SerializeField] private float HorizontalBoundary = 22.5f;
+    [SerializeField] private float HorizontalBoundary = 24.0f;
     [SerializeField] private float bottomBound = 0f;
     [SerializeField] private float facing = 1f;
     public float Facing => facing;
