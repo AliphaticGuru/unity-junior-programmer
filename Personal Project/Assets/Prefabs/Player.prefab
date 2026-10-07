@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 256982174100280072}
   - component: {fileID: 7270117773279945118}
-  - component: {fileID: 7929362944098846147}
+  - component: {fileID: 6115862494481186876}
+  - component: {fileID: 5569736806104248129}
+  - component: {fileID: 2878651049893683010}
   - component: {fileID: 1427974316666252530}
   - component: {fileID: 309703459288571553}
   - component: {fileID: 8345405074050748773}
@@ -52,7 +54,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   speed: 4.5
-  HorizontalBoundary: 23
+  HorizontalBoundary: 24
   bottomBound: 0
   facing: 0
   jumpForce: 13
@@ -117,7 +119,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
   moveInput: {x: 0, y: 0}
---- !u!114 &7929362944098846147
+--- !u!114 &6115862494481186876
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,30 +128,63 @@ MonoBehaviour:
   m_GameObject: {fileID: 4070009585268895183}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d48d2d1b262264d488a119d5e9589fc7, type: 3}
+  m_Script: {fileID: 11500000, guid: cc9c384426ed4f54eb0891374f6e60bc, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ShootingPower
-  hasPowerup: 0
-  powerupIndicator: {fileID: 0}
-  powerUpDuration: 5
-  fireAction:
-    m_Name: Fire
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
+  attackAction:
+    m_Name: Attack
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: efdd3aa5-ac58-423f-8ebf-78d2737b7c8b
+    m_Id: 457c1c05-52bb-4c84-a179-dfac50e9cf37
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: c182c8d4-0cb9-4901-a198-a0e5379f0c44
+      m_Id: 5f8f9dc9-7065-42d8-9d73-4e481d027478
       m_Path: <Keyboard>/f
       m_Interactions: 
       m_Processors: 
       m_Groups: 
-      m_Action: Fire
+      m_Action: Attack
       m_Flags: 0
     m_Flags: 0
+  meleeRange: 1.5
+  meleeDamage: 1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
   projectilePrefab: {fileID: 8486062887789318881, guid: 85104863c3830104fb3b10b100ef8216, type: 3}
+  projectileOrigin: {x: 0, y: 1.2, z: 0}
+--- !u!114 &5569736806104248129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4070009585268895183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a99ce75ed8f272e4b9a11005861a536e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerPowerUp
+  powerupIndicator: {fileID: 0}
+  powerUpDuration: 5
+--- !u!114 &2878651049893683010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4070009585268895183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed22889472969fd468fbb039ad4d80dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealthPerLife: 3
+  maxLives: 3
+  invulnerabilityDuration: 2
+  respawnPosition: {x: 0, y: 0.2, z: -3}
 --- !u!33 &1427974316666252530
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -226,8 +261,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1079232, y: 2.8678489, z: 0.6714237}
-  m_Center: {x: -0.02135855, y: 1.4301894, z: 0.002580285}
+  m_Size: {x: 0.7552309, y: 2.8678489, z: 1.1039362}
+  m_Center: {x: 0.002982378, y: 1.4301894, z: 0.014165401}
 --- !u!54 &5946716916318685344
 Rigidbody:
   m_ObjectHideFlags: 0
