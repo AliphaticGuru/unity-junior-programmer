@@ -7,6 +7,12 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private float speed = 2f;
     [SerializeField] private int maxHealth = 3;
 
+    [Header("Facing")]
+    [SerializeField] private float facingRightRotation = 90f;
+    [SerializeField] private float facingLeftRotation = -90f;
+
+    protected float Facing { get; private set; }
+
     protected Transform player;
     protected SurvivalManager survivalManager;
 
@@ -42,6 +48,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
             return;
         }
 
+        FacePlayer();
         PerformBehaviour();
     }
 
@@ -75,6 +82,35 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         {
             player = playerObject.transform;
             playerDamageable = playerObject.GetComponent<IDamageable>();
+        }
+    }
+
+    protected void FacePlayer()
+    {
+        float directionX = player.position.x - transform.position.x;
+
+        if (Mathf.Approximately(directionX, 0f))
+        {
+            return;
+        }
+
+        if (directionX > 0f)
+        {
+            Facing = 1f;
+            transform.rotation = Quaternion.Euler(
+                0f,
+                facingRightRotation,
+                0f
+            );
+        }
+        else
+        {
+            Facing = -1f;
+            transform.rotation = Quaternion.Euler(
+                0f,
+                facingLeftRotation,
+                0f
+            );
         }
     }
 

@@ -23,18 +23,19 @@ public class RusherEnemy : Enemy
     private void MoveTowardsPlayer()
     {
         Vector3 direction = player.position - transform.position;
-
         direction.y = 0f;
 
-        if (direction.sqrMagnitude > 0.01f)
+        if (direction.sqrMagnitude <= 0.01f)
         {
-            direction.Normalize();
-
-            transform.Translate(
-                direction * Speed * Time.deltaTime,
-                Space.World
-            );
+            return;
         }
+
+        direction.Normalize();
+
+        transform.Translate(
+            direction * Speed * Time.deltaTime,
+            Space.World
+        );
     }
 
     private void AttackPlayer()
