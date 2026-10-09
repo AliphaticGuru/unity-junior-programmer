@@ -72,6 +72,8 @@ public class PlayerController : MonoBehaviour
         // controls players horizontal movement while staying in the designated boundary
         transform.Translate(transform.right * moveInput.x * speed * Time.deltaTime);
 
+        // playerRb.AddForce(Vector3.right * moveInput.x * speed * Time.deltaTime, ForceMode.Impulse);
+
         // Only update rotation if the player is actively pressing a direction
         if (moveInput.x != 0)
         {

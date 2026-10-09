@@ -52,6 +52,8 @@ MonoBehaviour:
   spawnRangeX: 23
   spawnYMin: 0
   spawnYMax: 20
+  enemySpeedCap: 3
   enemyCount: 0
   waveCount: 0
   enemySpeed: 0
+  maxEnemiesPerWave: 15

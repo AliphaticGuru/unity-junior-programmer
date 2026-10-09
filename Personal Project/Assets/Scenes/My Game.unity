@@ -1631,14 +1631,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 319197792}
-    - target: {fileID: 524817575545565764, guid: e8ec0c416eadbac4396e5acfd3846451, type: 3}
-      propertyPath: spawnRangeX
-      value: 23
-      objectReference: {fileID: 0}
-    - target: {fileID: 524817575545565764, guid: e8ec0c416eadbac4396e5acfd3846451, type: 3}
-      propertyPath: enemySpeedCap
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 866724827826536423, guid: e8ec0c416eadbac4396e5acfd3846451, type: 3}
       propertyPath: m_Name
       value: Survival Manager
@@ -1739,6 +1731,14 @@ PrefabInstance:
     - target: {fileID: 4070009585268895183, guid: 7369efc90f4ed5f44a58da1e62669acc, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330442470549366893, guid: 7369efc90f4ed5f44a58da1e62669acc, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4330442470556785581, guid: 7369efc90f4ed5f44a58da1e62669acc, type: 3}
+      propertyPath: m_Name
+      value: PlayerModel
       objectReference: {fileID: 0}
     - target: {fileID: 5569736806104248129, guid: 7369efc90f4ed5f44a58da1e62669acc, type: 3}
       propertyPath: powerupIndicator

@@ -52,7 +52,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RusherEnemy
   speed: 2
   maxHealth: 1
-  meleeRange: 1.5
+  facingRightRotation: 90
+  facingLeftRotation: -90
+  meleeRange: 0.3
+  attackCooldown: 1
 --- !u!33 &3187405368117737705
 MeshFilter:
   m_ObjectHideFlags: 0

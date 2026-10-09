@@ -17,9 +17,12 @@ public class PlayerCombat : MonoBehaviour
 
     private PlayerController playerController;
 
+    private PlayerAnimator playerAnimator;
+
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
+        playerAnimator = GetComponent<PlayerAnimator>();
     }
 
     private void OnEnable()
@@ -96,6 +99,8 @@ public class PlayerCombat : MonoBehaviour
     {
         target.TakeDamage(meleeDamage);
 
+        playerAnimator?.PlayMelee();
+
         Debug.Log("Player performed melee attack.");
     }
 
@@ -121,6 +126,8 @@ public class PlayerCombat : MonoBehaviour
                 playerController.Facing
             );
         }
+
+        playerAnimator?.PlayShoot();
 
         Debug.Log("Player performed ranged attack.");
     }

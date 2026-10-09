@@ -3,7 +3,7 @@ using UnityEngine;
 public class RusherEnemy : Enemy
 {
     [Header("Rusher Settings")]
-    [SerializeField] private float meleeRange = 1.5f;
+    [SerializeField] private float meleeRange = 0.01f;
 
     [SerializeField] private float attackCooldown = 1f;
     private float nextAttackTime;

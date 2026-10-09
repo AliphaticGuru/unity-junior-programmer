@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6115862494481186876}
   - component: {fileID: 5569736806104248129}
   - component: {fileID: 2878651049893683010}
+  - component: {fileID: 108823475547261694}
   - component: {fileID: 1427974316666252530}
   - component: {fileID: 309703459288571553}
   - component: {fileID: 8345405074050748773}
@@ -185,6 +186,18 @@ MonoBehaviour:
   maxLives: 3
   invulnerabilityDuration: 2
   respawnPosition: {x: 0, y: 0.2, z: -3}
+--- !u!114 &108823475547261694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4070009585268895183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a09cc7c37d3325439cdec0d637c3869, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimator
 --- !u!33 &1427974316666252530
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -192,7 +205,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4070009585268895183}
-  m_Mesh: {fileID: 4300124, guid: c72c97e952bf7834b85e6164373d310d, type: 3}
+  m_Mesh: {fileID: 4300130, guid: c72c97e952bf7834b85e6164373d310d, type: 3}
 --- !u!23 &309703459288571553
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -297,7 +310,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4070009585268895183}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
