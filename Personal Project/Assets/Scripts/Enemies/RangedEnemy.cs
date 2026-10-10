@@ -15,10 +15,12 @@ public class RangedEnemy : Enemy
     {
         if (IsPlayerInAttackRange())
         {
+            SetMovingAnimation(false);
             AttackPlayer();
         }
         else
         {
+            SetMovingAnimation(true);
             MoveTowardsPlayer();
         }
     }
@@ -89,5 +91,7 @@ public class RangedEnemy : Enemy
                 Facing
             );
         }
+
+        enemyAnimator?.PlayShoot();
     }
 }

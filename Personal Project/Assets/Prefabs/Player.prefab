@@ -1173,7 +1173,7 @@ GameObject:
   - component: {fileID: 4330442470556616589}
   - component: {fileID: 4330442470549366893}
   m_Layer: 0
-  m_Name: SimplePeople_Man_Business_Brown
+  m_Name: PlayerModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1217,10 +1217,10 @@ Animator:
   m_GameObject: {fileID: 4330442470556785581}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: c72c97e952bf7834b85e6164373d310d, type: 3}
-  m_Controller: {fileID: 9100000, guid: 1de385df2ff713a41adfcbbb63b8af91, type: 2}
+  m_Controller: {fileID: 9100000, guid: c8ddb182cc7ebd348847d5f5fd6890d9, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0

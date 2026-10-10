@@ -24,9 +24,12 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     public int MaxHealth => maxHealth;
     public float Speed => speed;
 
+    protected EnemyAnimator enemyAnimator;
+
     protected virtual void Awake()
     {
         currentHealth = maxHealth;
+        enemyAnimator = GetComponent<EnemyAnimator>();
     }
 
     protected virtual void Start()
@@ -117,6 +120,11 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     private void FindSurvivalManager()
     {
         survivalManager = FindAnyObjectByType<SurvivalManager>();
+    }
+
+    protected void SetMovingAnimation(bool isMoving)
+    {
+        enemyAnimator?.SetMoving(isMoving);
     }
 }
 

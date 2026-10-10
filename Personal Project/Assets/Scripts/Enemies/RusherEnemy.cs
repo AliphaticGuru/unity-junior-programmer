@@ -12,10 +12,12 @@ public class RusherEnemy : Enemy
     {
         if (IsPlayerInMeleeRange())
         {
+            SetMovingAnimation(false);
             AttackPlayer();
         }
         else
         {
+            SetMovingAnimation(true);
             MoveTowardsPlayer();
         }
     }
@@ -47,6 +49,7 @@ public class RusherEnemy : Enemy
 
         nextAttackTime = Time.time + attackCooldown;
 
+        enemyAnimator?.PlayAttack();
         playerDamageable?.TakeDamage(1);
     }
 

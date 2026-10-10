@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jump")]
     [SerializeField] private float jumpForce = 10f;
-    [SerializeField] private bool isOnGround;
+    [SerializeField] public bool isOnGround;
     [SerializeField] private float gravityModifier;    
     [SerializeField] public InputAction moveAction;
     [SerializeField] public InputAction jumpAction;

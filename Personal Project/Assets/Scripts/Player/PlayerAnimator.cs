@@ -19,6 +19,7 @@ public class PlayerAnimator : MonoBehaviour
     private void Update()
     {
         UpdateMovementAnimation();
+        UpdateJumpAnimation();
     }
 
     private void UpdateMovementAnimation()
@@ -32,6 +33,16 @@ public class PlayerAnimator : MonoBehaviour
             Mathf.Abs(playerController.moveInput.x);
 
         animator.SetFloat("Speed", horizontalInput);
+    }
+
+    private void UpdateJumpAnimation()
+    {
+        if (playerController == null)
+        {
+            return;
+        }
+
+        animator.SetBool("IsOnGround", playerController.isOnGround);
     }
 
     public void PlayShoot()
