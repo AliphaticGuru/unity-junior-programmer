@@ -67,6 +67,7 @@ MonoBehaviour:
   maxHealth: 1
   facingRightRotation: 90
   facingLeftRotation: -90
+  scoreValue: 10
   meleeRange: 0.3
   attackCooldown: 1
 --- !u!33 &3187405368117737705

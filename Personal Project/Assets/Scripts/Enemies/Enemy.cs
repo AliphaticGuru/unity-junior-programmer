@@ -11,6 +11,12 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private float facingRightRotation = 90f;
     [SerializeField] private float facingLeftRotation = -90f;
 
+    [Header("Scoring")]
+    [SerializeField] private int scoreValue = 10;
+
+    private ScoreManager scoreManager;
+    private bool isDead;
+
     protected float Facing { get; private set; }
 
     protected Transform player;
@@ -30,6 +36,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     {
         currentHealth = maxHealth;
         enemyAnimator = GetComponent<EnemyAnimator>();
+        scoreManager = FindAnyObjectByType<ScoreManager>();
     }
 
     protected virtual void Start()
@@ -59,7 +66,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     public virtual void TakeDamage(int damage)
     {
-        if (damage <= 0)
+        if (damage <= 0 || isDead)
         {
             return;
         }
@@ -74,6 +81,25 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     protected virtual void Die()
     {
+        if (isDead)
+        {
+            return;
+        }
+
+        isDead = true;
+
+        if (scoreManager != null)
+        {
+            scoreManager.AddScore(scoreValue);
+        }
+        else
+        {
+            Debug.LogWarning(
+                "ScoreManager not found. Enemy defeated without awarding points.",
+                this
+            );
+        }
+
         Destroy(gameObject);
     }
 

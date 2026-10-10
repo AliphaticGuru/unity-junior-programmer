@@ -67,6 +67,7 @@ MonoBehaviour:
   maxHealth: 3
   facingRightRotation: 90
   facingLeftRotation: -90
+  scoreValue: 20
   attackRange: 5
   attackCooldown: 2
   projectilePrefab: {fileID: 7860700558631738174, guid: 3813e4da0871d8a43b42eb85257995da, type: 3}
