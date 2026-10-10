@@ -15,6 +15,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private int scoreValue = 10;
 
     private ScoreManager scoreManager;
+
+    private PlayerHealth playerHealth;
     private bool isDead;
 
     protected float Facing { get; private set; }
@@ -37,6 +39,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         currentHealth = maxHealth;
         enemyAnimator = GetComponent<EnemyAnimator>();
         scoreManager = FindAnyObjectByType<ScoreManager>();
+        playerHealth = FindAnyObjectByType<PlayerHealth>();
     }
 
     protected virtual void Start()
@@ -53,7 +56,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     protected virtual void Update()
     {
-        if (player == null)
+        if (playerHealth == null || playerHealth.IsDead)
         {
             return;
         }

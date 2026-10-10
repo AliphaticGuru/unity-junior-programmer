@@ -1,8 +1,11 @@
 using System.Collections;
+using System;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
+    public event Action StatsChanged;
+
     [Header("Player Health")]
     [SerializeField] private int maxHealthPerLife = 3;
 
@@ -18,6 +21,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     private bool isInvulnerable;
     private int currentLives;
 
+    private bool isDead;
+
+    public bool IsDead => isDead;
+
     public bool IsInvulnerable => isInvulnerable;
 
     public int CurrentLives => currentLives;
@@ -30,16 +37,18 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         currentHealth = maxHealthPerLife;
         currentLives = maxLives;
+
+        StatsChanged?.Invoke();
     }
 
     public void TakeDamage(int damage)
     {
-        if (damage <= 0 || isInvulnerable)
+        if (isDead || damage <= 0 || isInvulnerable)
         {
             return;
         }
 
-        currentHealth -= damage;
+        currentHealth = Mathf.Max(0, currentHealth - damage);
 
         Debug.Log(
             $"Player Health: {currentHealth}/{maxHealthPerLife}"
@@ -48,22 +57,31 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (currentHealth <= 0)
         {
             LoseLife();
+            return;
         }
+
+        StatsChanged?.Invoke();
     }
 
     private void LoseLife()
     {
-        currentLives--;
+        if (isDead || currentLives <= 0)
+        {
+            return;
+        }
+
+        currentLives = Mathf.Max(0, currentLives - 1);
 
         Debug.Log($"Player lost a life. Lives remaining: {currentLives}");
 
-        if (currentLives <= 0)
+        if (currentLives == 0)
         {
             Die();
             return;
         }
         
         currentHealth = maxHealthPerLife;
+        StatsChanged?.Invoke();
 
         Respawn();
     }
@@ -94,6 +112,17 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     private void Die()
     {
+        if (isDead)
+        {
+            return;
+        }
+
+        isDead = true;
+        currentHealth = 0;
+        currentLives = 0;
+
+        StatsChanged?.Invoke();
+        
         Debug.Log("Game Over!");
 
         gameObject.SetActive(false);
