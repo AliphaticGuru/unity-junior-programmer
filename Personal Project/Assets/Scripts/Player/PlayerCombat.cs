@@ -5,6 +5,7 @@ public class PlayerCombat : MonoBehaviour
 {
     [Header("Attack")]
     [SerializeField] private InputAction attackAction;
+    [SerializeField] private PlayerVFX playerVFX;
 
     [Header("Melee")]
     [SerializeField] private float meleeRange = 1.5f;
@@ -26,6 +27,7 @@ public class PlayerCombat : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         gameManager = FindAnyObjectByType<GameManager>();
         playerAnimator = GetComponent<PlayerAnimator>();
+        playerVFX = GetComponent<PlayerVFX>();
     }
 
     private void OnEnable()
@@ -106,6 +108,8 @@ public class PlayerCombat : MonoBehaviour
         target.TakeDamage(meleeDamage);
 
         playerAnimator?.PlayMelee();
+
+        playerVFX?.PlayMeleeEffect();
 
         Debug.Log("Player performed melee attack.");
     }
