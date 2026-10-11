@@ -7,6 +7,9 @@ public class HUDController : MonoBehaviour
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private PlayerHealth playerHealth;
 
+    [SerializeField] private SurvivalManager survivalManager;
+    [SerializeField] private TMP_Text waveText;
+
     [Header("UI References")]
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text highScoreText;
@@ -23,6 +26,11 @@ public class HUDController : MonoBehaviour
         if (playerHealth != null)
         {
             playerHealth.StatsChanged += UpdatePlayerStats;
+        }
+
+        if (survivalManager != null)
+        {
+            survivalManager.WaveStarted += UpdateWave;
         }
     }
 
@@ -44,6 +52,11 @@ public class HUDController : MonoBehaviour
         {
             playerHealth.StatsChanged -= UpdatePlayerStats;
         }
+
+        if (survivalManager != null)
+        {
+            survivalManager.WaveStarted -= UpdateWave;
+        }
     }
 
     private void RefreshHUD()
@@ -56,7 +69,18 @@ public class HUDController : MonoBehaviour
             );
         }
 
+        if (survivalManager != null)
+        {
+            UpdateWave(survivalManager.CurrentWave);
+        }
+
         UpdatePlayerStats();
+    }
+
+    private void UpdateWave(int wave)
+    {
+        if (waveText != null)
+            waveText.text = $"Wave: {wave}";
     }
 
     private void UpdateScore(int score, int highScore)

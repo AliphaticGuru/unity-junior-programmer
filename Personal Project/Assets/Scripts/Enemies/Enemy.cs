@@ -1,8 +1,10 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
 
 public abstract class Enemy : MonoBehaviour, IDamageable
 {
+    public event Action<Enemy> Defeated;
     [Header("Base Enemy Settings")]
     [SerializeField] private float speed = 2f;
     [SerializeField] private int maxHealth = 3;
@@ -47,10 +49,12 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         FindPlayer();
         FindSurvivalManager();
 
-        speed = Mathf.Clamp(
-            speed + survivalManager.enemySpeed,
-            speed,
-            survivalManager.enemySpeedCap
+        if (survivalManager == null)
+            return;
+
+        speed = Mathf.Min(
+            speed + survivalManager.EnemySpeedBonus,
+            Mathf.Max(speed, survivalManager.EnemySpeedCap)
         );
     }
 
@@ -102,6 +106,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable
                 this
             );
         }
+
+        Defeated?.Invoke(this);
 
         Destroy(gameObject);
     }

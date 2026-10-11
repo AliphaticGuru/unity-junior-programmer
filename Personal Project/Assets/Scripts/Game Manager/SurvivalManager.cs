@@ -1,82 +1,241 @@
+
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SurvivalManager : MonoBehaviour
 {
-    [Header("Object Prefabs")]
-    [SerializeField] private List<GameObject> enemyPrefab;
+    [Header("References")]
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private List<GameObject> enemyPrefabs;
     [SerializeField] private GameObject powerupPrefab;
     [SerializeField] private GameObject player;
 
-
-    [Header("Spawn Enemy")]
-    [SerializeField] private float spawnRangeX = 24.0f;
+    [Header("Enemy Spawning")]
+    [SerializeField] private float spawnRangeX = 24f;
     [SerializeField] private float spawnYMin = 0.5f;
     [SerializeField] private float spawnYMax = 10f;
-    [SerializeField] public float enemySpeedCap = 3f;
 
-    [Header("Wave Data")]
-    [SerializeField] private int enemyCount;
-    [SerializeField] private int waveCount;
-    [SerializeField] public float enemySpeed;
+    [Header("Wave Settings")]
+    [SerializeField] private int startingEnemyCount = 1;
+    [SerializeField] private int maxEnemiesPerWave = 15;
+    [SerializeField] private float waveDelay = 3f;
 
-    [Header("Wave Limits")]
-    [SerializeField] private int maxEnemiesPerWave = 15; // The hard cap for enemies
+    [Header("Difficulty")]
+    [SerializeField] private float startingEnemySpeed = 1f;
+    [SerializeField] private float enemySpeedIncrease = 0.2f;
+    [SerializeField] private float enemySpeedCap = 3f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Header("Player")]
+    [SerializeField] private bool resetPlayerEachWave = true;
+    [SerializeField] private Vector3 playerSpawnPosition =
+        new Vector3(0f, 0.2f, -3f);
+
+
+    public float EnemySpeedBonus {get; private set;}
+    public float EnemySpeedCap => enemySpeedCap;
+
+
+    public int CurrentWave { get; private set; }
+    public int ActiveEnemyCount { get; private set; }
+    public float CurrentEnemySpeed { get; private set; }
+
+    public event Action<int> WaveStarted;
+    public event Action<int> WaveCompleted;
+
+    private readonly HashSet<Enemy> activeEnemies = new();
+
+    private Coroutine waveRoutine;
+    private bool waveInProgress;
+    private bool isGameOver;
+
+    private void Start()
     {
-        
+        CurrentEnemySpeed = startingEnemySpeed;
+        EnemySpeedBonus = 0f;
+
+        if (gameManager == null || player == null ||
+            enemyPrefabs == null || enemyPrefabs.Count == 0)
+        {
+            Debug.LogError(
+                "SurvivalManager has missing references.", this);
+            enabled = false;
+            return;
+        }
+
+        gameManager.StateChanged += HandleGameStateChanged;
+
+        if (gameManager.CurrentState == GameState.Playing)
+            StartNextWave();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        if (enemyCount == 0)
-        {
-            int enemiesToSpawn = Mathf.Min(waveCount, maxEnemiesPerWave); // Ensure enemies number does not exceed the cap
-            SpawnEnemyWave(enemiesToSpawn);
-            waveCount++;
+        if (gameManager != null)
+            gameManager.StateChanged -= HandleGameStateChanged;
+    }
 
-            if (enemySpeed < enemySpeedCap)
+    private void HandleGameStateChanged(GameState state)
+    {
+        if (state != GameState.GameOver)
+            return;
+
+        isGameOver = true;
+
+        if (waveRoutine != null)
+        {
+            StopCoroutine(waveRoutine);
+            waveRoutine = null;
+        }
+    }
+
+    private void StartNextWave()
+    {
+        if (isGameOver || waveInProgress ||
+            waveRoutine != null)
+            return;
+
+        waveRoutine = StartCoroutine(BeginWave());
+    }
+
+    private IEnumerator BeginWave()
+    {
+        if (CurrentWave > 0)
+            yield return new WaitForSeconds(waveDelay);
+
+        if (isGameOver)
+        {
+            waveRoutine = null;
+            yield break;
+        }
+
+        CurrentWave++;
+
+        int enemiesToSpawn = Mathf.Min(
+            startingEnemyCount + CurrentWave - 1,
+            maxEnemiesPerWave
+        );
+
+        if (resetPlayerEachWave)
+            ResetPlayerPosition();
+
+        waveInProgress = true;
+
+        SpawnEnemyWave(enemiesToSpawn);
+        SpawnPowerupIfNeeded();
+
+        WaveStarted?.Invoke(CurrentWave);
+
+        waveRoutine = null;
+
+        if (ActiveEnemyCount == 0)
+            CompleteWave();
+    }
+
+    private void SpawnEnemyWave(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            GameObject prefab = enemyPrefabs[
+                UnityEngine.Random.Range(0, enemyPrefabs.Count)
+            ];
+
+            if (prefab == null)
+                continue;
+
+            GameObject instance = Instantiate(
+                prefab,
+                GenerateSpawnPosition(),
+                prefab.transform.rotation
+            );
+
+            Enemy enemy = instance.GetComponent<Enemy>();
+
+            if (enemy != null)
             {
-                enemySpeed += 0.2f;
+                activeEnemies.Add(enemy);
+                enemy.Defeated += HandleEnemyDefeated;
+            }
+            else
+            {
+                Debug.LogWarning(
+                    "Spawned prefab has no Enemy component.",
+                    instance
+                );
             }
         }
 
-        Vector3 powerupSpawnOffset = new Vector3(-2f, 0.5f, 0f);
-
-        if (GameObject.FindGameObjectsWithTag("Powerup").Length == 0)
-        {
-            Instantiate(powerupPrefab, GeneratePowerup() + powerupSpawnOffset, powerupPrefab.transform.rotation);
-        }
-    }
-    Vector3 GenerateSpawnPosition()
-    {
-        float xPos = Random.Range(-spawnRangeX, spawnRangeX);
-        float yPos = Random.Range(spawnYMin, spawnYMax);
-        return new Vector3(xPos, yPos, -3f);
-    }
-    Vector3 GeneratePowerup()
-    {
-        float xPos = Random.Range(-spawnRangeX, spawnRangeX);
-        return new Vector3(xPos, 0, -3f);
+        ActiveEnemyCount = activeEnemies.Count;
     }
 
-    void SpawnEnemyWave(int enemiesToSpawn)
+    private void HandleEnemyDefeated(Enemy enemy)
     {
-        for (int i = 0; i < enemiesToSpawn; i++)
-        {
-            int index = Random.Range(0, enemyPrefab.Count);
-            Instantiate(enemyPrefab[index], GenerateSpawnPosition(), enemyPrefab[index].transform.rotation);
-        }
-        ResetPlayerPosition();
+        if (enemy == null || !activeEnemies.Remove(enemy))
+            return;
+
+        enemy.Defeated -= HandleEnemyDefeated;
+
+        ActiveEnemyCount = activeEnemies.Count;
+
+        if (ActiveEnemyCount == 0 && waveInProgress)
+            CompleteWave();
     }
-    void ResetPlayerPosition ()
+
+    private void CompleteWave()
     {
-        player.transform.position = new Vector3(0, 0.2f, -3f);
-        player.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-        player.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        if (isGameOver || !waveInProgress)
+            return;
+
+        waveInProgress = false;
+
+        WaveCompleted?.Invoke(CurrentWave);
+
+        EnemySpeedBonus += enemySpeedIncrease;
+
+        StartNextWave();
+    }
+
+    private Vector3 GenerateSpawnPosition()
+    {
+        return new Vector3(
+            UnityEngine.Random.Range(-spawnRangeX, spawnRangeX),
+            UnityEngine.Random.Range(spawnYMin, spawnYMax),
+            -3f
+        );
+    }
+
+    private void SpawnPowerupIfNeeded()
+    {
+        if (powerupPrefab == null)
+            return;
+
+        if (GameObject.FindGameObjectWithTag("Powerup") != null)
+            return;
+
+        Vector3 offset = new Vector3(-2f, 0.5f, 0f);
+
+        Vector3 position = new Vector3(
+            UnityEngine.Random.Range(-spawnRangeX, spawnRangeX),
+            0f,
+            -3f
+        );
+
+        Instantiate(
+            powerupPrefab,
+            position + offset,
+            powerupPrefab.transform.rotation
+        );
+    }
+
+    private void ResetPlayerPosition()
+    {
+        player.transform.position = playerSpawnPosition;
+
+        if (player.TryGetComponent(out Rigidbody rb))
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
     }
 }
