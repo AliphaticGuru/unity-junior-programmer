@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
     public event Action StatsChanged;
+    public event Action Died;
 
     [Header("Player Health")]
     [SerializeField] private int maxHealthPerLife = 3;
@@ -122,6 +123,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         currentLives = 0;
 
         StatsChanged?.Invoke();
+
+        Died?.Invoke();
         
         Debug.Log("Game Over!");
 
