@@ -9,6 +9,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     [Header("Player Health")]
     [SerializeField] private int maxHealthPerLife = 3;
+    public bool IsInvulnerable =>
+    isInvulnerable ||
+    (playerPowerUp != null && playerPowerUp.HasPowerup);
 
     [Header("Player Lives")]
     [SerializeField] private int maxLives = 3;
@@ -16,6 +19,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [Header("Respawn")]
     [SerializeField] private float invulnerabilityDuration = 2f;
     [SerializeField] private Vector3 respawnPosition = new Vector3(0f, 0.2f, -3f);
+
+    [SerializeField] private PlayerPowerUp playerPowerUp;
 
 
     private int currentHealth;
@@ -25,8 +30,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     private bool isDead;
 
     public bool IsDead => isDead;
-
-    public bool IsInvulnerable => isInvulnerable;
 
     public int CurrentLives => currentLives;
     public int MaxLives => maxLives;

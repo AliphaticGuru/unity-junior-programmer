@@ -20,6 +20,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravityModifier;    
     [SerializeField] public InputAction moveAction;
     [SerializeField] public InputAction jumpAction;
+    [SerializeField] private PlayerPowerUp playerPowerUp;
+
+    private float EffectiveMoveSpeed =>
+    speed * (
+        playerPowerUp != null
+            ? playerPowerUp.SpeedMultiplier
+            : 1f
+    );
     
     public Vector2 moveInput;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -79,9 +87,9 @@ public class PlayerController : MonoBehaviour
         }
 
         // controls players horizontal movement while staying in the designated boundary
-        transform.Translate(transform.right * moveInput.x * speed * Time.deltaTime);
+        transform.Translate(transform.right * moveInput.x * EffectiveMoveSpeed * Time.deltaTime);
 
-        // playerRb.AddForce(Vector3.right * moveInput.x * speed * Time.deltaTime, ForceMode.Impulse);
+        // playerRb.AddForce(Vector3.right * moveInput.x * EffectiveMoveSpeed * Time.deltaTime, ForceMode.Impulse);
 
         // Only update rotation if the player is actively pressing a direction
         if (moveInput.x != 0)
