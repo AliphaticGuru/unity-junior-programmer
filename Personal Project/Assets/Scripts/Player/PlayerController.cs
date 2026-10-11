@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float Facing => facing;
     // [SerializeField] private GameObject focalPoint;
     private Rigidbody playerRb;
+    private GameManager gameManager;
 
     [Header("Jump")]
     [SerializeField] private float jumpForce = 10f;
@@ -22,6 +23,10 @@ public class PlayerController : MonoBehaviour
     
     public Vector2 moveInput;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Awake()
+    {
+        gameManager = FindAnyObjectByType<GameManager>();
+    }
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
@@ -38,6 +43,10 @@ public class PlayerController : MonoBehaviour
     // Player controller using the x and y-components vector
     private void MovePlayer()
     {
+        if (gameManager.CurrentState != GameState.Playing)
+        {
+            return;
+        }
         // Read the users horizontal and vertical keypress and assigned to moveInput variable
         moveInput = moveAction.ReadValue<Vector2>();                
         Vector3 playerPos = transform.position;

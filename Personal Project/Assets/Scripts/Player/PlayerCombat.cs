@@ -17,11 +17,14 @@ public class PlayerCombat : MonoBehaviour
 
     private PlayerController playerController;
 
+    private GameManager gameManager;
+
     private PlayerAnimator playerAnimator;
 
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
+        gameManager = FindAnyObjectByType<GameManager>();
         playerAnimator = GetComponent<PlayerAnimator>();
     }
 
@@ -97,6 +100,9 @@ public class PlayerCombat : MonoBehaviour
 
     private void PerformMeleeAttack(IDamageable target)
     {
+        if (gameManager.CurrentState != GameState.Playing)
+            return;
+
         target.TakeDamage(meleeDamage);
 
         playerAnimator?.PlayMelee();
@@ -106,6 +112,9 @@ public class PlayerCombat : MonoBehaviour
 
     private void PerformRangedAttack()
     {
+        if (gameManager.CurrentState != GameState.Playing)
+        return;
+        
         if (projectilePrefab == null)
         {
             return;

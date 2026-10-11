@@ -16,6 +16,9 @@ public class GameUIController : MonoBehaviour
     [SerializeField] private GameObject pauseButton;
     [SerializeField] private TMP_Text finalScoreText;
 
+    [SerializeField] private TMP_Text highScoreText;
+    [SerializeField] private GameObject newRecordLabel;
+
     private void OnEnable()
     {
         if (gameManager != null)
@@ -40,13 +43,30 @@ public class GameUIController : MonoBehaviour
         gameOverPanel.SetActive(state == GameState.GameOver);
 
         if (pauseButton != null)
+        {
             pauseButton.SetActive(state == GameState.Playing);
+        }
 
+        
         if (state == GameState.GameOver && scoreManager != null)
         {
-            finalScoreText.text =
-                $"Final Score: {scoreManager.CurrentScore}";
+            int finalScore = scoreManager.CurrentScore;
+            int highScore = scoreManager.HighScore;
+
+            finalScoreText.text = $"Final Score: {finalScore}";
+
+            if (highScoreText != null)
+                highScoreText.text = $"High Score: {highScore}";
+
+            if (newRecordLabel != null)
+            {
+                bool isNewRecord =
+                    finalScore > 0 && finalScore == highScore;
+
+                newRecordLabel.SetActive(isNewRecord);
+            }
         }
+
     }
 
     public void OnPauseClicked()
