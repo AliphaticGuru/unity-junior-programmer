@@ -28,7 +28,7 @@ public class SurvivalManager : MonoBehaviour
     [SerializeField] private float enemySpeedCap = 3f;
 
     [Header("Player")]
-    [SerializeField] private bool resetPlayerEachWave = true;
+    [SerializeField] private bool resetPlayerEachWave = false;
     [SerializeField] private Vector3 playerSpawnPosition =
         new Vector3(0f, 0.2f, -3f);
 
@@ -43,6 +43,9 @@ public class SurvivalManager : MonoBehaviour
 
     public event Action<int> WaveStarted;
     public event Action<int> WaveCompleted;
+
+    public event Action<int> WaveCountdownChanged;
+    public event Action<float> DifficultyChanged;
 
     private readonly HashSet<Enemy> activeEnemies = new();
 
@@ -99,10 +102,30 @@ public class SurvivalManager : MonoBehaviour
         waveRoutine = StartCoroutine(BeginWave());
     }
 
+    
     private IEnumerator BeginWave()
     {
         if (CurrentWave > 0)
-            yield return new WaitForSeconds(waveDelay);
+        {
+            int countdown = Mathf.CeilToInt(waveDelay);
+
+            while (countdown > 0)
+            {
+                if (isGameOver)
+                {
+                    waveRoutine = null;
+                    yield break;
+                }
+
+                WaveCountdownChanged?.Invoke(countdown);
+
+                yield return new WaitForSeconds(1f);
+
+                countdown--;
+            }
+
+            WaveCountdownChanged?.Invoke(0);
+        }
 
         if (isGameOver)
         {
@@ -132,6 +155,7 @@ public class SurvivalManager : MonoBehaviour
         if (ActiveEnemyCount == 0)
             CompleteWave();
     }
+
 
     private void SpawnEnemyWave(int count)
     {
@@ -192,6 +216,8 @@ public class SurvivalManager : MonoBehaviour
         WaveCompleted?.Invoke(CurrentWave);
 
         EnemySpeedBonus += enemySpeedIncrease;
+
+        DifficultyChanged?.Invoke(EnemySpeedBonus);
 
         StartNextWave();
     }
