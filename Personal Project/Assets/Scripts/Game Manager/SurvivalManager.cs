@@ -11,6 +11,7 @@ public class SurvivalManager : MonoBehaviour
     [SerializeField] private List<GameObject> enemyPrefabs;
     [SerializeField] private GameObject powerupPrefab;
     [SerializeField] private GameObject player;
+    [SerializeField] private SaveGameManager saveGameManager;
 
     [Header("Enemy Spawning")]
     [SerializeField] private float spawnRangeX = 24f;
@@ -69,6 +70,10 @@ public class SurvivalManager : MonoBehaviour
 
         gameManager.StateChanged += HandleGameStateChanged;
 
+        // Restore progress before spawning the first wave.
+        if (saveGameManager != null)
+            saveGameManager.InitializeRun();
+
         if (gameManager.CurrentState == GameState.Playing)
             StartNextWave();
     }
@@ -105,6 +110,8 @@ public class SurvivalManager : MonoBehaviour
     
     private IEnumerator BeginWave()
     {
+        yield return null;
+        
         if (CurrentWave > 0)
         {
             int countdown = Mathf.CeilToInt(waveDelay);
@@ -264,4 +271,14 @@ public class SurvivalManager : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
         }
     }
+
+    public void RestoreProgress(int wave, float speedBonus)
+    {
+        CurrentWave = Mathf.Max(0, wave - 1);
+        EnemySpeedBonus = Mathf.Max(0f, speedBonus);
+
+        waveInProgress = false;
+        isGameOver = false;
+    }
+
 }

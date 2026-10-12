@@ -51,4 +51,20 @@ public class ScoreManager : MonoBehaviour
         CurrentScore = 0;
         ScoreChanged?.Invoke(CurrentScore, HighScore);
     }
+
+    
+    public void RestoreScore(int savedScore)
+    {
+        CurrentScore = Mathf.Max(0, savedScore);
+
+        if (CurrentScore > HighScore)
+        {
+            HighScore = CurrentScore;
+            PlayerPrefs.SetInt(HighScoreKey, HighScore);
+            PlayerPrefs.Save();
+        }
+
+        ScoreChanged?.Invoke(CurrentScore, HighScore);
+    }
+
 }

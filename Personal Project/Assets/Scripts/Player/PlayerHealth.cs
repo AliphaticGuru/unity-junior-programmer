@@ -93,6 +93,25 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         Respawn();
     }
 
+    
+    public void RestoreState(int health, int lives)
+    {
+        StopAllCoroutines();
+
+        currentLives = Mathf.Clamp(lives, 1, maxLives);
+        currentHealth = Mathf.Clamp(
+            health, 1, maxHealthPerLife
+        );
+
+        isDead = false;
+        isInvulnerable = false;
+
+        gameObject.SetActive(true);
+
+        StatsChanged?.Invoke();
+    }
+
+
     private void Respawn()
     {
         transform.position = respawnPosition;

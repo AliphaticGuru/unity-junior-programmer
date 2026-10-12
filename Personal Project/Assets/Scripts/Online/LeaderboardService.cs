@@ -66,6 +66,37 @@ public class LeaderboardService : MonoBehaviour
         }
     }
 
+    
+    public async Task<bool> UpdatePlayerNameAsync(string username)
+    {
+        if (string.IsNullOrWhiteSpace(username))
+            return false;
+
+        try
+        {
+            await InitializeAsync();
+
+            await AuthenticationService.Instance
+                .UpdatePlayerNameAsync(username);
+
+            Debug.Log(
+                "Online player name: " +
+                AuthenticationService.Instance.PlayerName
+            );
+
+            return true;
+        }
+        catch (Exception exception)
+        {
+            Debug.LogWarning(
+                $"Player name update failed: {exception.Message}"
+            );
+
+            return false;
+        }
+    }
+
+
     public async Task<LeaderboardScoresPage>
         GetTopScoresAsync()
     {
