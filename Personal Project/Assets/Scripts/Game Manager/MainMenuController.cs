@@ -8,10 +8,12 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject continueButton;
 
     private JsonSaveRepository repository;
+    private LocalProfileRepository profileRepository;
 
     private void Awake()
     {
         repository = new JsonSaveRepository();
+        profileRepository = new LocalProfileRepository();
     }
 
     private void Start()
@@ -35,9 +37,29 @@ public class MainMenuController : MonoBehaviour
         SceneManager.LoadScene(gameplayScene);
     }
 
+    // public void PlayGame()
+    // {
+    //     Time.timeScale = 1f;
+    //     SceneManager.LoadScene(gameplayScene);
+    // }
+
     public void PlayGame()
     {
-        Time.timeScale = 1f;
+        if (!profileRepository.Exists)
+        {
+            // Display registration panel.
+            return;
+        }
+
+        if (repository.Exists)
+        {
+            GameSession.RequestContinue();
+        }
+        else
+        {
+            GameSession.RequestNewGame();
+        }
+
         SceneManager.LoadScene(gameplayScene);
     }
 
