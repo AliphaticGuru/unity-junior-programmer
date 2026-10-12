@@ -71,7 +71,7 @@ MonoBehaviour:
   attackRange: 5
   attackCooldown: 2
   projectilePrefab: {fileID: 7860700558631738174, guid: 3813e4da0871d8a43b42eb85257995da, type: 3}
-  projectileSpawnOffset: {x: 0, y: 1.2, z: 0}
+  projectileSpawnOffset: {x: 0, y: 1, z: 0}
 --- !u!33 &7809898825832774471
 MeshFilter:
   m_ObjectHideFlags: 0

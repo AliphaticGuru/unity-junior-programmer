@@ -9,6 +9,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     [Header("Player Health")]
     [SerializeField] private int maxHealthPerLife = 3;
+
+    [Header("Powerup")]
+    [SerializeField] private PlayerPowerUp playerPowerUp;
     public bool IsInvulnerable =>
     isInvulnerable ||
     (playerPowerUp != null && playerPowerUp.HasPowerup);
@@ -20,7 +23,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [SerializeField] private float invulnerabilityDuration = 2f;
     [SerializeField] private Vector3 respawnPosition = new Vector3(0f, 0.2f, -3f);
 
-    [SerializeField] private PlayerPowerUp playerPowerUp;
+    // [SerializeField] private PlayerPowerUp playerPowerUp;
 
 
     private int currentHealth;
@@ -47,7 +50,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
-        if (isDead || damage <= 0 || isInvulnerable)
+        if (isDead || damage <= 0 || IsInvulnerable)
         {
             return;
         }

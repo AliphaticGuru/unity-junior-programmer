@@ -8,7 +8,7 @@ public class PlayerPowerUp : MonoBehaviour
     [Header("Powerup")]
     [SerializeField] private GameObject powerupIndicator;
     [SerializeField, Min(0.1f)]
-    private float powerUpDuration = 5f;
+    private float powerUpDuration = 6f;
 
     [SerializeField, Min(1f)]
     private float speedMultiplier = 3f;
