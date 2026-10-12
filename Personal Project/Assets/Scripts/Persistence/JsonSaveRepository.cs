@@ -1,14 +1,18 @@
-
 using System;
 using System.IO;
 using UnityEngine;
 
 public class JsonSaveRepository
 {
-    private readonly string savePath = Path.Combine(
-        Application.persistentDataPath,
-        "survival-save.json"
-    );
+    private readonly string savePath;
+
+    public JsonSaveRepository()
+    {
+        savePath = Path.Combine(
+            Application.persistentDataPath,
+            "survival-save.json"
+        );
+    }
 
     public bool Exists => File.Exists(savePath);
 
@@ -25,9 +29,7 @@ public class JsonSaveRepository
         File.WriteAllText(tempPath, json);
 
         if (File.Exists(savePath))
-        {
             File.Delete(savePath);
-        }
 
         File.Move(tempPath, savePath);
     }
@@ -39,15 +41,7 @@ public class JsonSaveRepository
 
         string json = File.ReadAllText(savePath);
 
-        GameSaveData data =
-            JsonUtility.FromJson<GameSaveData>(json);
-
-        if (data == null || data.version != 1)
-            throw new InvalidDataException(
-                "Unsupported or invalid save file."
-            );
-
-        return data;
+        return JsonUtility.FromJson<GameSaveData>(json);
     }
 
     public void Delete()

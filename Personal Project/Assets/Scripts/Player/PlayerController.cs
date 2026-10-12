@@ -96,6 +96,17 @@ public class PlayerController : MonoBehaviour
             dropRequested = true;
     }
 
+    public void RestoreFacing(float direction)
+    {
+        facing = direction >= 0f ? 1f : -1f;
+
+        transform.rotation = Quaternion.Euler(
+            0f,
+            facing > 0f ? 0f : 180f,
+            0f
+        );
+    }
+
     private void UpdateFacing()
     {
         if (Mathf.Abs(moveInput.x) < 0.01f)
