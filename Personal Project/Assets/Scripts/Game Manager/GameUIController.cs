@@ -1,4 +1,3 @@
-
 using TMPro;
 using UnityEngine;
 
@@ -6,7 +5,7 @@ public class GameUIController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameManager gameManager;
-    [SerializeField] private ScoreManager scoreManager;
+
 
     [Header("Panels")]
     [SerializeField] private GameObject pausePanel;
@@ -14,9 +13,12 @@ public class GameUIController : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private GameObject pauseButton;
-    [SerializeField] private TMP_Text finalScoreText;
 
+    [Header("Game Over Scores")]
+    [SerializeField] private TMP_Text finalScoreText;
     [SerializeField] private TMP_Text highScoreText;
+    [SerializeField] private ScoreManager scoreManager;
+
     [SerializeField] private GameObject newRecordLabel;
 
     private void OnEnable()
@@ -48,25 +50,54 @@ public class GameUIController : MonoBehaviour
         }
 
         
-        if (state == GameState.GameOver && scoreManager != null)
+        if (state == GameState.GameOver)
         {
-            int finalScore = scoreManager.CurrentScore;
-            int highScore = scoreManager.HighScore;
-
-            finalScoreText.text = $"Final Score: {finalScore}";
-
-            if (highScoreText != null)
-                highScoreText.text = $"High Score: {highScore}";
-
-            if (newRecordLabel != null)
+            if (scoreManager != null)
             {
-                bool isNewRecord =
-                    finalScore > 0 && finalScore == highScore;
+                int finalScore = scoreManager.CurrentScore;
+                int highScore = scoreManager.HighScore;
 
-                newRecordLabel.SetActive(isNewRecord);
+                finalScoreText.text = $"Final Score: {finalScore}";
+
+                if (highScoreText != null)
+                    highScoreText.text = $"High Score: {highScore}";
+
+                if (newRecordLabel != null)
+                {
+                    bool isNewRecord =
+                        finalScore > 0 && finalScore == highScore;
+
+                    newRecordLabel.SetActive(isNewRecord);
+                }
             }
+            
+            UpdateGameOverScores();
+            
         }
 
+    }
+
+    private void UpdateGameOverScores()
+    {
+        if (scoreManager == null)
+        {
+            Debug.LogWarning(
+                "GameUIController: ScoreManager is not assigned."
+            );
+            return;
+        }
+
+        if (finalScoreText != null)
+        {
+            finalScoreText.text =
+                $"Final Score: {scoreManager.CurrentScore}";
+        }
+
+        if (highScoreText != null)
+        {
+            highScoreText.text =
+                $"High Score: {scoreManager.HighScore}";
+        }
     }
 
     public void OnPauseClicked()
