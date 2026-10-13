@@ -1,69 +1,85 @@
-# Unity Junior Programmer — Projects & Portfolio
+# Unity Junior Programmer — Completed Pathway & Project Portfolio
 
-A collection of Unity projects completed during the **Unity Learn Junior Programmer Pathway**, featuring course prototypes, programming challenges, and an expanded **2.5D survival game** developed as a personal project.
+**Status: Unity Learn Junior Programmer Pathway completed** 🎉
 
-This repository documents my progression in **Unity, C#, gameplay systems, software architecture, debugging, and Git-based development**.
+A repository of Unity and C# projects developed throughout the [Unity Learn Junior Programmer Pathway](https://learn.unity.com/pathway/junior-programmer). It contains course prototypes, exercises, starter projects, and a larger **2.5D wave-based survival game** that brings together the skills learned across the pathway.
 
-## Featured Project: 2.5D Survival Game
+**Focus:** C# programming · Gameplay systems · Object-oriented design · UI · Persistence · Online services · Git & GitHub
 
-**Location:** [Personal Project](./Personal%20Project)
+## Featured Project — 2.5D Survival Game
 
-A wave-based survival platformer built in Unity. The player fights increasingly challenging enemies, manages health and limited lives, collects powerups, and competes for high scores.
+**[Explore the Personal Project](./Personal%20Project)**
 
-### Gameplay features
+A wave-based survival platformer in which the player fights enemies, survives progressively harder waves, collects powerups, and competes for high scores.
 
-- **Player movement and combat:** Rigidbody-based movement, jumping, melee attacks, and ranged attacks.
-- **Health and lives:** Three health points per life, three lives, respawning, and temporary invulnerability.
-- **Enemy behaviors:** Rusher and ranged enemy types with shared damage-handling abstractions.
-- **Wave survival:** Progressive enemy waves, scaling difficulty, and enemy tracking.
-- **Powerups and feedback:** Temporary movement boosts, protection while powered up, and visual effects.
-- **Game flow:** Playing, paused, and game-over states with menu and HUD controls.
-- **Scoring:** Enemy-defeat points and a locally persisted high score.
-- **Save and continue:** Local JSON save data for resuming player progress, score, and wave difficulty.
-- **Local player profiles:** Username registration and a returning-player welcome flow, including offline play.
-- **Online leaderboard:** Unity Gaming Services Authentication and Leaderboards for submitting and viewing global scores when connected.
+### Features
 
-> **Save/load scope:** A saved wave is restarted when continuing; individual live enemies and projectiles are not serialized. Local player profiles are not equivalent to recoverable cross-device online accounts. Internet access is required for online leaderboard operations, not for core gameplay.
+- **Movement and combat:** Rigidbody-based movement, jumping, ranged attacks, and melee attacks
+- **Survival gameplay:** Enemy spawning, wave progression, increasing difficulty, and multiple enemy behaviors
+- **Player systems:** Health, lives, respawning, and temporary invulnerability
+- **Powerups:** Temporary movement boosts and gameplay feedback
+- **Game flow:** Main menu, pause/resume, game over, and restart
+- **Scoring:** Current score and locally stored high score
+- **Save and continue:** JSON-based local game progress, including player state, score, and wave progress
+- **Player profiles:** Offline username registration and returning-player welcome screen
+- **Online leaderboard:** Unity Gaming Services Authentication and Leaderboards; internet required for online rankings
+- **Audio feedback:** Gameplay and UI sound effects for a more responsive experience
 
-### Engineering approach
+> **Persistence notes:** Continuing a saved game restarts the saved wave rather than restoring every individual enemy and projectile. A local profile does not provide a recoverable cross-device account.
 
-The project practices object-oriented programming, event-driven communication, component-based design, and separation of responsibilities. Examples include:
+### Technical architecture
 
-| System | Responsibility |
+| Component | Purpose |
 | --- | --- |
-| `GameManager` | Game states, pause/resume, restart, and scene navigation |
-| `PlayerHealth` | Damage, lives, respawn, and death events |
-| `SurvivalManager` | Enemy waves, spawn progression, and difficulty |
-| `ScoreManager` | Current score and local high score |
-| `SaveGameManager` / `JsonSaveRepository` | Game-state capture and local JSON persistence |
-| `PlayerRegistrationUI` / `LocalProfileRepository` | Local profile creation and main-menu flow |
-| `LeaderboardService` / `LeaderboardController` | Online score operations and leaderboard presentation |
+| `GameManager` | Game state and scene transitions |
+| `PlayerController`, `PlayerCombat`, `PlayerHealth` | Player movement, attacks, damage, and lives |
+| `SurvivalManager` | Wave progression and enemy difficulty |
+| `ScoreManager` | Score tracking and local high score |
+| `SaveGameManager`, `JsonSaveRepository` | Game progress serialization and persistence |
+| `PlayerRegistrationUI`, `LocalProfileRepository` | Offline player registration and menu experience |
+| `LeaderboardService`, `LeaderboardController` | Online leaderboard integration |
+| `AudioManager` | Sound-effect playback |
 
-## Unity Learn Projects
+The project demonstrates component-based development, object-oriented programming, event-driven interactions, and separation of responsibilities.
 
-| Project | Description |
-| --- | --- |
-| [Mod the Cube](./Mod%20the%20Cube) | Unity Learn scripting modification exercise |
-| [Prototype 1](./Prototype%201) | Course prototype and challenge work |
-| [Prototype 2](./Prototype%202) | Course prototype and challenge work |
-| [Prototype 3](./Prototype%203) | Course prototype and challenge work |
-| [Prototype 4](./Prototype%204) | Course prototype and challenge work |
-| [Personal Project](./Personal%20Project) | Expanded wave-based survival game with persistence and online leaderboard features |
+## All Projects in This Repository
 
-The prototypes and challenges are **Unity Learn coursework**. The Personal Project demonstrates how those concepts were combined and extended into a larger playable game.
+The following table reflects **all nine Unity project directories currently present in the repository**.
 
-## Technologies & Skills
+| Project | Path | Learning context |
+| --- | --- | --- |
+| **Mod the Cube** | [Open project](./Mod%20the%20Cube) | Introductory Unity scripting modification exercise |
+| **Prototype 1** | [Open project](./Prototype%201) | Junior Programmer course prototype |
+| **Prototype 2** | [Open project](./Prototype%202) | Junior Programmer course prototype |
+| **Prototype 3** | [Open project](./Prototype%203) | Junior Programmer course prototype |
+| **Prototype 4** | [Open project](./Prototype%204) | Junior Programmer course prototype |
+| **Prototype 5** | [Open project](./Prototype%205) | Additional Junior Programmer course prototype |
+| **Prototype 7 JP Starter-U6** | [Open project](./Prototype%207%20JP%20Starter-U6) | Unit 6 starter project retained in the repository |
+| **Data-Persistence-Starter** | [Open project](./Data-Persistence-Starter) | Data persistence starter project and practice |
+| **Personal Project** | [Open project](./Personal%20Project) | Expanded 2.5D survival game, including persistence, profiles, online leaderboard, and audio |
 
-- **Engine:** Unity
-- **Programming:** C#
-- **Gameplay:** Input System, Rigidbody physics, collisions, triggers, prefabs, coroutines, and particle effects
-- **UI:** Unity UI and TextMeshPro
-- **Persistence:** JSON files and Unity `PlayerPrefs`
-- **Online services:** Unity Gaming Services Authentication and Leaderboards
-- **Engineering:** OOP, interfaces, events, debugging, and separation of concerns
-- **Version control:** Git, GitHub, feature branches, and pull requests
+The course prototypes and starter projects document learning and experimentation; the Personal Project is the main integrated showcase. Starter folders are identified as starter projects rather than presented as independently completed games.
 
-## Getting Started
+## Skills & Technologies
+
+- **Unity and C#:** MonoBehaviours, GameObjects, components, prefabs, and scene management
+- **Gameplay:** Physics, collisions, input, coroutines, enemy behavior, and game-state management
+- **User interfaces:** Unity UI and TextMeshPro
+- **Software design:** OOP, interfaces, events, modular responsibilities, and debugging
+- **Persistence:** JSON files, `Application.persistentDataPath`, and `PlayerPrefs`
+- **Online features:** Unity Gaming Services Authentication and Leaderboards
+- **Audio:** `AudioSource`, `AudioClip`, and sound-effect triggers
+- **Version control:** Git branches, commits, pull requests, and merges
+
+## Play the Game — WebGL
+
+**Unity Play publication: planned.**
+
+A browser-playable build of the Personal Project will be linked here after it is built, uploaded, and verified on Unity Play.
+
+For the published version, test browser compatibility, UI scaling, input controls, local save behavior, audio playback, and online leaderboard access. Browser storage and Unity Gaming Services behavior may differ from the Unity Editor.
+
+## Open a Project in Unity
 
 1. Clone the repository:
 
@@ -71,50 +87,53 @@ The prototypes and challenges are **Unity Learn coursework**. The Personal Proje
    git clone https://github.com/AliphaticGuru/unity-junior-programmer.git
    ```
 
-2. Open **Unity Hub** and add the desired project folder (for example, `Personal Project`).
-3. Use the Unity Editor version specified by that project's `ProjectSettings/ProjectVersion.txt`. Allow Unity to import assets and resolve packages.
-4. Open the project's main menu scene in `Assets/Scenes` and press **Play**.
+2. Open **Unity Hub** and add the project folder you want to explore, such as `Personal Project` or `Prototype 5`.
+3. Use the Unity Editor version specified in that project's `ProjectSettings/ProjectVersion.txt`.
+4. Allow Unity to import assets and packages.
+5. Open an appropriate scene under `Assets/Scenes` and press **Play**.
 
-**Online features:** Unity Gaming Services requires a properly linked Unity Cloud project, configured Authentication and Leaderboards services, and network access. The project uses the leaderboard ID `survival_highscores`. A fresh clone may require your own service configuration and permissions. Local gameplay and profile/save features are designed to work offline.
+For the Personal Project, start from the Main Menu scene. Before creating a build, verify the scene list in Unity's build settings.
 
-**Build setup:** Confirm that the main menu and gameplay scenes are included in the project's build scene list before building a standalone player.
+**Online services:** A fresh clone may need its own Unity Cloud project linkage and service configuration. The Personal Project uses the leaderboard ID `survival_highscores`. Local gameplay and save/profile functionality are designed for offline use.
 
-## Repository Structure
+## Repository Layout
 
 ```text
 unity-junior-programmer/
+├── Data-Persistence-Starter/
 ├── Mod the Cube/
 ├── Prototype 1/
 ├── Prototype 2/
 ├── Prototype 3/
 ├── Prototype 4/
+├── Prototype 5/
+├── Prototype 7 JP Starter-U6/
 ├── Personal Project/
 │   ├── Assets/
-│   │   ├── Scenes/
-│   │   └── Scripts/
-│   │       ├── Game Manager/
-│   │       ├── Online/
-│   │       ├── Persistence/
-│   │       └── Player/
 │   ├── Packages/
 │   └── ProjectSettings/
+├── .gitignore
 └── README.md
 ```
 
-Unity-generated caches and build artifacts are excluded through `.gitignore`.
+Each Unity project is maintained in its own directory. Generated Unity cache and build files are excluded through `.gitignore`.
 
-## Git Workflow
+## Development Workflow
 
-Development is tracked through Git commits and feature branches. The player profile, persistence, and leaderboard integration work was merged into `main` through [Pull Request #1](https://github.com/AliphaticGuru/unity-junior-programmer/pull/1).
+Git and GitHub were used to track the work, including feature branches and pull requests:
 
-This documents a practical workflow: **feature branch → implementation → testing → pull request → merge**.
+- [Pull Request #1 — Player profiles, save/continue, and leaderboard integration](https://github.com/AliphaticGuru/unity-junior-programmer/pull/1)
+- [Pull Request #2 — Gameplay and UI sound effects](https://github.com/AliphaticGuru/unity-junior-programmer/pull/2)
 
-## Project Status & Next Steps
+Both were merged into `main`, documenting the workflow **feature branch → implementation → testing → pull request → merge**.
 
-- **Unity Junior Programmer Pathway:** Completed.
-- **Personal Project:** Core gameplay, menu, scoring, local persistence, player profiles, and leaderboard integration implemented.
-- **Next portfolio improvements:** Gameplay screenshots or GIFs, a packaged playable build, release notes, and a tagged release.
+## Project Status
+
+- **Junior Programmer Pathway:** Completed
+- **Personal Project:** Gameplay, menus, persistence, profiles, leaderboard, and audio implemented
+- **Publication:** Preparing a WebGL build for Unity Play
+- **Portfolio:** README maintained as a record of projects and technical progress
 
 ## Acknowledgment
 
-The learning prototypes are based on exercises from the [Unity Learn Junior Programmer Pathway](https://learn.unity.com/pathway/junior-programmer). This repository serves as a record of learning and an evolving programming portfolio.
+The pathway prototypes and exercises originate from [Unity Learn](https://learn.unity.com/). This repository documents my learning progress and the application of those skills in an extended personal game project.
