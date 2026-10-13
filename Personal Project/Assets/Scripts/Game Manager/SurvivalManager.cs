@@ -157,6 +157,8 @@ public class SurvivalManager : MonoBehaviour
 
         WaveStarted?.Invoke(CurrentWave);
 
+        AudioManager.Instance?.PlayWaveStarted();
+
         waveRoutine = null;
 
         if (ActiveEnemyCount == 0)

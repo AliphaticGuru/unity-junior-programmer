@@ -103,20 +103,28 @@ public class GameUIController : MonoBehaviour
     public void OnPauseClicked()
     {
         gameManager.PauseGame();
+
+        AudioManager.Instance?.PlayButtonClick();
     }
 
     public void OnResumeClicked()
     {
         gameManager.ResumeGame();
+
+        AudioManager.Instance?.PlayButtonClick();
     }
 
     public void OnRestartClicked()
     {
         gameManager.RestartGame();
+
+        AudioManager.Instance?.PlayButtonClick();
     }
 
     public void OnMainMenuClicked()
     {
         gameManager.ReturnToMainMenu();
+
+       AudioManager.Instance?.PlayButtonClick(); 
     }
 }

@@ -143,6 +143,8 @@ public class PlayerController : MonoBehaviour
             Vector3.up * jumpForce,
             ForceMode.Impulse
         );
+        
+        AudioManager.Instance?.PlayJump();
 
         isOnGround = false;
     }
