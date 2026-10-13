@@ -111,6 +111,8 @@ public class PlayerCombat : MonoBehaviour
 
         playerVFX?.PlayMeleeEffect();
 
+        AudioManager.Instance?.PlayMelee();
+
         Debug.Log("Player performed melee attack.");
     }
 
@@ -141,6 +143,8 @@ public class PlayerCombat : MonoBehaviour
         }
 
         playerAnimator?.PlayShoot();
+
+        AudioManager.Instance?.PlayShoot();
 
         Debug.Log("Player performed ranged attack.");
     }

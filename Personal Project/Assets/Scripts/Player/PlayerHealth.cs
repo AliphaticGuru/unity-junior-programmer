@@ -57,9 +57,11 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
         currentHealth = Mathf.Max(0, currentHealth - damage);
 
-        Debug.Log(
-            $"Player Health: {currentHealth}/{maxHealthPerLife}"
-        );
+        AudioManager.Instance?.PlayPlayerHit();
+
+        // Debug.Log(
+        //     $"Player Health: {currentHealth}/{maxHealthPerLife}"
+        // );
 
         if (currentHealth <= 0)
         {
@@ -79,7 +81,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
         currentLives = Mathf.Max(0, currentLives - 1);
 
-        Debug.Log($"Player lost a life. Lives remaining: {currentLives}");
+        AudioManager.Instance?.PlayLifeLost();
+
+        // Debug.Log($"Player lost a life. Lives remaining: {currentLives}");
 
         if (currentLives == 0)
         {
@@ -151,8 +155,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
         Died?.Invoke();
         
-        Debug.Log("Game Over!");
-
+        AudioManager.Instance?.PlayGameOver();
+        
         gameObject.SetActive(false);
     }
 }

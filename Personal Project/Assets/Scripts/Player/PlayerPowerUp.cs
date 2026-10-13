@@ -46,6 +46,8 @@ public class PlayerPowerUp : MonoBehaviour
 
         hasPowerup = true;
 
+        AudioManager.Instance?.PlayPowerup();
+
         if (powerupIndicator != null)
             powerupIndicator.SetActive(true);
 
