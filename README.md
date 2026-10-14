@@ -4,13 +4,15 @@
 
 A repository of Unity and C# projects developed throughout the [Unity Learn Junior Programmer Pathway](https://learn.unity.com/pathway/junior-programmer). It contains course prototypes, exercises, starter projects, and a larger **2.5D wave-based survival game** that brings together the skills learned across the pathway.
 
+**🎮 [PLAY LIGHT FURY IN YOUR BROWSER ON UNITY PLAY](https://play.unity.com/en/games/b84ca2e7-8dc9-438a-8c25-f764539218af/light-fury)**
+
 **Focus:** C# programming · Gameplay systems · Object-oriented design · UI · Persistence · Online services · Git & GitHub
 
-## Featured Project — 2.5D Survival Game
+## Featured Project — Light Fury: 2.5D Survival Game
 
-**[Explore the Personal Project](./Personal%20Project)**
+**[▶ Play Light Fury on Unity Play](https://play.unity.com/en/games/b84ca2e7-8dc9-438a-8c25-f764539218af/light-fury)** · **[Explore the Personal Project source](./Personal%20Project)**
 
-A wave-based survival platformer in which the player fights enemies, survives progressively harder waves, collects powerups, and competes for high scores.
+Light Fury is a wave-based survival platformer in which the player fights enemies, survives progressively harder waves, collects powerups, and competes for high scores. The WebGL build is published on Unity Play and can be launched in a supported browser.
 
 ### Features
 
@@ -25,7 +27,7 @@ A wave-based survival platformer in which the player fights enemies, survives pr
 - **Online leaderboard:** Unity Gaming Services Authentication and Leaderboards; internet required for online rankings
 - **Audio feedback:** Gameplay and UI sound effects for a more responsive experience
 
-> **Persistence notes:** Continuing a saved game restarts the saved wave rather than restoring every individual enemy and projectile. A local profile does not provide a recoverable cross-device account.
+> **Persistence notes:** Continuing a saved game restarts the saved wave rather than restoring every individual enemy and projectile. A local profile does not provide a recoverable cross-device account. Browser storage and online-service behavior may differ from the Unity Editor.
 
 ### Technical architecture
 
@@ -56,7 +58,7 @@ The following table reflects **all nine Unity project directories currently pres
 | **Prototype 5** | [Open project](./Prototype%205) | Additional Junior Programmer course prototype |
 | **Prototype 7 JP Starter-U6** | [Open project](./Prototype%207%20JP%20Starter-U6) | Unit 6 starter project retained in the repository |
 | **Data-Persistence-Starter** | [Open project](./Data-Persistence-Starter) | Data persistence starter project and practice |
-| **Personal Project** | [Open project](./Personal%20Project) | Expanded 2.5D survival game, including persistence, profiles, online leaderboard, and audio |
+| **Personal Project — Light Fury** | [Play on Unity Play](https://play.unity.com/en/games/b84ca2e7-8dc9-438a-8c25-f764539218af/light-fury) · [Source folder](./Personal%20Project) | Expanded 2.5D survival game, including persistence, profiles, online leaderboard, and audio |
 
 The course prototypes and starter projects document learning and experimentation; the Personal Project is the main integrated showcase. Starter folders are identified as starter projects rather than presented as independently completed games.
 
@@ -71,13 +73,13 @@ The course prototypes and starter projects document learning and experimentation
 - **Audio:** `AudioSource`, `AudioClip`, and sound-effect triggers
 - **Version control:** Git branches, commits, pull requests, and merges
 
-## Play the Game — WebGL
+## Play Light Fury — WebGL
 
-**Unity Play publication: planned.**
+**[Launch Light Fury on Unity Play](https://play.unity.com/en/games/b84ca2e7-8dc9-438a-8c25-f764539218af/light-fury)**
 
-A browser-playable build of the Personal Project will be linked here after it is built, uploaded, and verified on Unity Play.
+The browser-playable WebGL build is published on Unity Play. Open the link above to play.
 
-For the published version, test browser compatibility, UI scaling, input controls, local save behavior, audio playback, and online leaderboard access. Browser storage and Unity Gaming Services behavior may differ from the Unity Editor.
+When testing the browser version, note that browser storage, input behavior, audio playback, and Unity Gaming Services connectivity may differ from running the game in the Unity Editor. Online leaderboard access requires an internet connection.
 
 ## Open a Project in Unity
 
@@ -130,8 +132,8 @@ Both were merged into `main`, documenting the workflow **feature branch → impl
 ## Project Status
 
 - **Junior Programmer Pathway:** Completed
-- **Personal Project:** Gameplay, menus, persistence, profiles, leaderboard, and audio implemented
-- **Publication:** Preparing a WebGL build for Unity Play
+- **Personal Project — Light Fury:** Gameplay, menus, persistence, profiles, leaderboard, and audio implemented
+- **WebGL publication:** Published on Unity Play — [Play Light Fury](https://play.unity.com/en/games/b84ca2e7-8dc9-438a-8c25-f764539218af/light-fury)
 - **Portfolio:** README maintained as a record of projects and technical progress
 
 ## Acknowledgment
